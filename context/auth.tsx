@@ -9,6 +9,7 @@ type AuthContextType = {
   currentUser: User | null
   logout: () => Promise<void>
   loginWithGoogle: () => Promise<void>
+  customClaims: ParsedToken | null
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -46,7 +47,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ currentUser, logout, loginWithGoogle }}>
+    <AuthContext.Provider value={{ currentUser, logout, loginWithGoogle, customClaims }}>
       {children}
     </AuthContext.Provider>
   )
