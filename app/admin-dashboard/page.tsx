@@ -1,12 +1,11 @@
 import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import { getProperties } from "@/data/properties";
 import { PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
+import PropertiesTable from "./properties-table";
 
 export default async function AdminDashboard() {
-  const data = await getProperties()
-  console.log(data)
+
   return <div>
     <Breadcrumbs items={[{
       label: "Dashboard"
@@ -17,5 +16,6 @@ export default async function AdminDashboard() {
         <PlusCircleIcon /> New Property
       </Link>
     </Button>
+    <PropertiesTable />
   </div >
 }
