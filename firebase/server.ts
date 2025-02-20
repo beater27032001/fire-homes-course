@@ -47,3 +47,15 @@ if (!currentApps.length) {
 
 // Exporta as instâncias de Firestore e Auth para uso em outras partes do aplicativo
 export { firestore, auth };
+
+// Função para obter o número total de páginas de resultados de uma consulta no Firestore
+export const getTotalPages = async (firestoreQuery: FirebaseFirestore.Query<
+  FirebaseFirestore.DocumentData,
+  FirebaseFirestore.DocumentData>, pageSize: number) => {
+  const queryCount = firestoreQuery.count()
+  const countSnapshot = await queryCount.get()
+  const countData = countSnapshot.data()
+  const total = countData.count
+  const totalPages = Math.ceil(total / pageSize)
+  return totalPages
+}
