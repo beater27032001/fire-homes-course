@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { getProperties } from "@/data/properties"
+import { PencilIcon } from "lucide-react"
 import Link from "next/link"
 
 export default async function PropertiesTable({
@@ -14,7 +15,6 @@ export default async function PropertiesTable({
       pageSize: 2
     }
   })
-  console.log({ data, totalPages })
 
   return (
     <>
@@ -42,7 +42,13 @@ export default async function PropertiesTable({
                   <TableCell>{address}</TableCell>
                   <TableCell>{property.price}</TableCell>
                   <TableCell>{property.status}</TableCell>
-                  <TableCell>View/edit</TableCell>
+                  <TableCell>View/{" "}
+                    <Button asChild variant='outline' size='sm'>
+                      <Link href={`/admin-dashboard/edit/${property.id}`}>
+                        <PencilIcon />
+                      </Link>
+                    </Button>
+                  </TableCell>
                 </TableRow>
               )
             })}

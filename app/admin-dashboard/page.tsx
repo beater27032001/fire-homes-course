@@ -8,7 +8,6 @@ export default async function AdminDashboard({
   searchParams
 }: { searchParams?: Promise<any> }) {
   const searchParamsValue = await searchParams
-  console.log({ searchParamsValue })
 
   return <div>
     <Breadcrumbs items={[{
