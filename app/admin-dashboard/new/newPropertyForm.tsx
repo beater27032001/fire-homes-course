@@ -4,9 +4,9 @@ import { useAuth } from "@/context/auth"
 import { propertyDataSchema } from "@/validation/propertySchema"
 import { PlusCircleIcon } from "lucide-react"
 import { z } from "zod"
-import { saveNewProperty } from "./actions"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
+import { createProperty } from "./actions"
 
 export default function NewPropertyForm() {
   const auth = useAuth()
@@ -18,7 +18,7 @@ export default function NewPropertyForm() {
 
     if (!token) return // Se não houver token, retorna
 
-    const response = await saveNewProperty({ ...data, token }) // Salva a nova propriedade
+    const response = await createProperty(data, token) // Salva a nova propriedade
 
     if (!!response.error) {
       toast({

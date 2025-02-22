@@ -66,9 +66,10 @@ export const getProperties = async (options?: GetPropertiesOptions) => {
   return { data: properties, totalPages }
 }
 
+// Função para obter propriedade por ID
 export const getPropertyById = async (propertyId: string) => {
-  const propertySnapshot = await firestore.collection("properties").doc(propertyId).get()
+  const propertySnapshot = await firestore.collection("properties").doc(propertyId).get() // Obtém o documento da propriedade
 
-  const propertyData = { id: propertySnapshot.id, ...propertySnapshot.data() } as Property
-  return propertyData
+  const propertyData = { id: propertySnapshot.id, ...propertySnapshot.data() } as Property // Mapeia o documento para o tipo Property
+  return propertyData // Retorna os dados da propriedade
 }
