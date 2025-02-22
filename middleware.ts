@@ -19,6 +19,16 @@ export async function middleware(request: NextRequest) {
   // Obtém o valor do token de autenticação do cookie
   const token = cookieStore.get("firebaseAuthToken")?.value
 
+  // Se não houver token e a URL da próxima requisição começar com /login, permite a continuação da requisição
+  if (!token && request.nextUrl.pathname.startsWith("/login")) {
+    return NextResponse.next()
+  }
+
+  // Se houver token e a URL da próxima requisição começar com /login, redireciona para a página inicial
+  if (token && request.nextUrl.pathname.startsWith("/login")) {
+    return NextResponse.redirect(new URL("/", request.url))
+  }
+
   // Se não houver token, redireciona para a página inicial
   if (!token) {
     return NextResponse.redirect(new URL("/", request.url))
@@ -38,6 +48,8 @@ export async function middleware(request: NextRequest) {
 // Configuração do middleware para aplicar apenas na rota /admin-dashboard
 export const config = {
   matcher: [
-    "/admin-dashboard"
+    "/admin-dashboard",
+    "/admin-dashboard/:path*",
+    "/login"
   ]
 }
