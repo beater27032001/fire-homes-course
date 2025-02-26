@@ -9,4 +9,5 @@ export type Property = {
   bedrooms: number
   bathrooms: number
   status: "for-sale" | "draft" | "withdrawn" | "sold"
+  images?: string[]
 }

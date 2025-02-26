@@ -22,7 +22,8 @@ export default function EditPropertyForm({
   postcode,
   price,
   status,
-  address2
+  address2,
+  images = []
 }: Props) {
   const router = useRouter()
   const { toast } = useToast()
@@ -55,7 +56,11 @@ export default function EditPropertyForm({
           postcode,
           price,
           status,
-          address2
+          address2,
+          images: images.map(image => ({
+            url: image,
+            id: image
+          }))
         }} />
     </div>
   )

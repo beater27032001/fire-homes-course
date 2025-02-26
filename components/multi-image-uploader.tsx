@@ -16,11 +16,13 @@ export type ImageUpload = {
 type Props = {
   images?: ImageUpload[]
   onImagesChange: (images: ImageUpload[]) => void
+  urlFormatter: (image: ImageUpload) => string
 }
 
 export default function MultiImageUploader({
   images = [],
-  onImagesChange
+  onImagesChange,
+  urlFormatter
 }: Props) {
   const uploadInputRef = useRef<HTMLInputElement | null>(null)
 
@@ -73,14 +75,31 @@ export default function MultiImageUploader({
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="property-images" direction="vertical">
           {(provided) => (
-            <div{...provided.droppableProps} ref={provided.innerRef}>
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
               {images.map((image, index) => (
-                <Draggable key={image.id} draggableId={image.id} index={index}>
+                <Draggable
+                  key={image.id}
+                  draggableId={image.id}
+                  index={index}
+                >
                   {(provided) => (
-                    <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} className="relative p-2">
+                    <div
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      ref={provided.innerRef}
+                      className="relative p-2"
+                    >
                       <div className="bg-gray-100 rounded-lg flex gap-2 items-center overflow-hidden">
                         <div className="size-16 relative">
-                          <Image src={image.url} alt="" fill className="object-cover" />
+                          <Image
+                            src={urlFormatter ? urlFormatter(image) : image.url}
+                            alt=""
+                            fill
+                            className="object-cover"
+                          />
                         </div>
                         <div className="flex-grow">
                           <p className="text-sm font-medium">
@@ -93,7 +112,10 @@ export default function MultiImageUploader({
                           )}
                         </div>
                         <div className="flex items-center p-2">
-                          <button onClick={() => handleDelete(image.id)} className="text-red-500 p-2">
+                          <button
+                            onClick={() => handleDelete(image.id)}
+                            className="text-red-500 p-2"
+                          >
                             <XIcon />
                           </button>
                           <div className="text-gray-500">
